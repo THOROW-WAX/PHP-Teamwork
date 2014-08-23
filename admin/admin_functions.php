@@ -15,13 +15,13 @@ function isLoggedAdmin($isLogged, $isAdmin){
 ///////////////////DB CONNETCTION  (shuld not be here !)/////////
 function db_init()
 {
-    mysql_connect('localhost','admin', '123') or die("Грешка с базата данни!");
-    mysql_select_db('forum');
+    mysqli_connect('localhost','admin', '123') or die("Грешка с базата данни!");
+    mysqli_select_db('forum');
 }
 //////////////////UTF ENCODING FIX (shuld not be here !)/////////
 function run_q($query){
     mysql_query("SET NAMES utf8");
-    return mysql_query($query);
+    return mysqli_query($query);
 }
 function check_status($status){
     switch ($status) {
