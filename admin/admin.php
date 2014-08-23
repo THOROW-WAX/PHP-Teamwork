@@ -16,6 +16,5 @@ admin_header("Admin Panel");
 echo "<h1>WELCOME TO ADMIN HOME PAGE</h1>";
 
 
-
 footer(); 
 ?>
