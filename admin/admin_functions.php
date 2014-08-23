@@ -26,7 +26,7 @@ function run_q($query){
 function check_status($status){
     switch ($status) {
         case 0: return "Not Displyed"; 
-        case 1: return "Active";
+        case 1: return "status";
         case 2: return "Inactive";
         case 3: return "Locked"; 
         default: return "Status Error (check db)";
@@ -46,7 +46,7 @@ function add_eddit_removePostsCats(){
                 $id=(int)$_POST['edit_id'];
                 if($id > 0){
                     $query = sprintf(
-                        "UPDATE categories SET name='%s',description='%s',active='%s' WHERE categories_id=%s",
+                        "UPDATE categories SET name='%s',description='%s',status='%s' WHERE categories_id=%s",
                         mysql_real_escape_string($cat_name),
                         mysql_real_escape_string($description),
                         mysql_real_escape_string($status),
@@ -61,7 +61,7 @@ function add_eddit_removePostsCats(){
             }
             else {
                 $query = sprintf(
-                    "INSERT INTO categories (categories_id,name,description,active) VALUES('','%s','%s','%s')",
+                    "INSERT INTO categories (categories_id,name,description,status) VALUES('','%s','%s','%s')",
                     mysql_real_escape_string($cat_name),
                     mysql_real_escape_string($description),
                     mysql_real_escape_string($status)

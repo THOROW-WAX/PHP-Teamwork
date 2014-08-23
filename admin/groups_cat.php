@@ -27,7 +27,7 @@ while ($row = mysql_fetch_assoc($rs)) {
         echo "There are no catecories";
     }else{
         echo "<li>".$row['name']."   "." --- " ;
-        echo check_status($row['active']);
+        echo check_status($row['status']);
         echo '<a href="groups_cat.php?mode=edit&id='.$row['categories_id'].'">| Edit |</a>'."</li>";
     }
 
@@ -48,10 +48,10 @@ if (isset($_GET['mode']) == "edit" && (isset($_GET['id']) > 0)) {
     Category name:<input type="text" name="group_name" value="<?php  echo isset($form_info['name']) == 1?$form_info['name']:''  ?>" /><br />
     Description:<textarea name="description" rows="5" cols="50"><?php  echo isset($form_info['description']) == 1?$form_info['description']:''  ?></textarea><br />
     Status:<select name="status">
-                <option <?php  echo isset($form_info['active']) == 1? $form_info['active'] == 0 ? 'selected="selected"':'' :''  ?>value="0">Not Displyed</option>
-                <option <?php  echo isset($form_info['active']) == 1? $form_info['active'] == 1 ? 'selected="selected"':'' :''  ?>value="1">Active</option>
-                <option <?php  echo isset($form_info['active']) == 1? $form_info['active'] == 2 ? 'selected="selected"':'' :''  ?>value="2">Inactive</option>
-                <option <?php  echo isset($form_info['active']) == 1? $form_info['active'] == 3 ? 'selected="selected"':'' :''  ?>value="3">Locked</option>
+                <option <?php  echo isset($form_info['status']) == 1? $form_info['status'] == 0 ? 'selected="selected"':'' :''  ?>value="0">Not Displyed</option>
+                <option <?php  echo isset($form_info['status']) == 1? $form_info['status'] == 1 ? 'selected="selected"':'' :''  ?>value="1">Active</option>
+                <option <?php  echo isset($form_info['status']) == 1? $form_info['status'] == 2 ? 'selected="selected"':'' :''  ?>value="2">InActive</option>
+                <option <?php  echo isset($form_info['status']) == 1? $form_info['status'] == 3 ? 'selected="selected"':'' :''  ?>value="3">Locked</option>
            </select> <br />
     <input type="submit" value="Submit" />
     <input type="hidden" name="ng" value="1" />
