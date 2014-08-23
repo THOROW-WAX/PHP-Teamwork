@@ -1,0 +1,64 @@
+h2
+{
+    font-size: 30px;
+    color: #234465;
+    font-weight: bold;
+    text-align:center;
+}
+table
+{
+    border-collapse: collapse;
+    margin:auto;
+}
+table,th,td
+{
+    border: 2px solid black;
+}
+.header
+{
+    font-size: 22px;
+    font-weight: bold;
+    background: #234465;
+    color:white;
+    height:50px;
+}
+.header_points
+{
+    width: 100px;
+}
+.ranking
+{
+    text-align: center;
+    font-size: 17px;
+    width: 40px;
+}
+.profile
+{
+    width: 500px;
+    padding: 1px;
+}
+.profile>img
+{
+    padding:2px;
+}
+.profile>label
+{
+    vertical-align: 130%;
+    font-size: 16px;
+    font-weight: bold;
+    padding:5px;
+}
+.profile>span
+{
+    vertical-align: 150%;
+    font-size: 13px;
+    font-weight: bold;
+    padding:2px;
+    margin:2px;
+}
+.points
+{
+    text-align: center;
+    font-size: 17px;
+    width: 40px;
+}
