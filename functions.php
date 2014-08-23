@@ -13,7 +13,7 @@ function myHeader ($title) {
     <nav>
         <ul>
             <?php
-            if ($_SESSION["isLogged"]===true){
+            if ($_SESSION['isLogged']===true){
 
             } else {
                 ?>
@@ -34,3 +34,4 @@ function myHeader ($title) {
 </html>
 <?php
     }
+    ?>
