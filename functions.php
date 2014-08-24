@@ -1,6 +1,7 @@
 <?php
 
 function myHeader ($title) {
+    header('Content-Type: text/html; charset=utf-8');
     ?>
 <!DOCTYPE html>
 <html>
@@ -13,7 +14,7 @@ function myHeader ($title) {
     <nav>
         <ul>
             <?php
-            if ($_SESSION['isLogged']===true){
+            if ($_SESSION["isLogged"]===true){
 
             } else {
                 ?>
@@ -28,10 +29,13 @@ function myHeader ($title) {
 </header>
 <?php
 }
+function db_init() {
+    mysql_connect('localhost', 'root') or die ("Error with DB");
+    mysql_select_db('forum');
+}
     function footer () {
         ?>
 </body>
 </html>
 <?php
     }
-    ?>
