@@ -1,3 +1,0 @@
--renamed active to status from categorys tabel 
--added group_cats tabel for for grouping categories
--added topics table for where the posts will be 
