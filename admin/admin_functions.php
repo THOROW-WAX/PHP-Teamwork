@@ -38,7 +38,7 @@ function add_eddit_removePostsCats(){
         $description = addslashes(trim($_POST['description']));
         $status = $_POST['status']; 
         $ed_id = isset($_POST['edit_id'])==1 ? (int)$_POST['edit_id'] : 0 ;
-        $rs = run_q('SELECT * FROM categories WHERE name="'.$cat_name.'"AND categories_id!="'.$ed_id.'"');
+        $rs = run_q('SELECT * FROM group_cats WHERE name="'.$cat_name.'"AND group_cats_id!="'.$ed_id.'"');
         echo mysql_error();
         if(!mysql_numrows($rs) > 0 ){
                 
@@ -46,8 +46,9 @@ function add_eddit_removePostsCats(){
                 $id=(int)$_POST['edit_id'];
                 if($id > 0){
                     $query = sprintf(
-                        "UPDATE categories SET name='%s',description='%s',status='%s' WHERE categories_id=%s",
+                        "UPDATE group_cats SET name='%s',added_by='%s',description='%s',status='%s' WHERE group_cats_id=%s",
                         mysql_real_escape_string($cat_name),
+                        mysql_real_escape_string('shefa'),//////////////////TO DO
                         mysql_real_escape_string($description),
                         mysql_real_escape_string($status),
                         mysql_real_escape_string($id)
@@ -61,11 +62,13 @@ function add_eddit_removePostsCats(){
             }
             else {
                 $query = sprintf(
-                    "INSERT INTO categories (categories_id,name,description,status) VALUES('','%s','%s','%s')",
+                    "INSERT INTO group_cats (group_cats_id,added_by,name,description,status) VALUES('NULL','%s','%s','%s','%s')",
+                    mysql_real_escape_string('shefa'),//////////////////TO DO
                     mysql_real_escape_string($cat_name),
                     mysql_real_escape_string($description),
                     mysql_real_escape_string($status)
                     );
+                    echo $query;
                 run_q($query);
                 echo mysql_error();
                 echo "<br>Submited !!!";
@@ -77,5 +80,6 @@ function add_eddit_removePostsCats(){
         echo "Name too short";
     }
 }
+
 ?>
 
