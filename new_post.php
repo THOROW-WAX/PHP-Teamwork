@@ -14,12 +14,9 @@ if ($_SESSION['isLogged'] === true && mysql_num_rows($result) == 1) {
         $content = mysql_real_escape_string(trim($_POST['content']));
 
         if (count($errors) == 0) {
-            run_query('INSERT INTO topics (categories_id, added_by, date_added, title) VALUES ('.$id.', '.$_SESSION['user_info']['user_id'].', '.time().', "'.htmlspecialchars($title).'")');
-            $result = run_query('SELECT topic_id FROM topics AND status=1');
-            $rows = mysql_fetch_assoc($result);
-            array_reverse($rows);
-            $topicID = $rows[0];
-            run_query('INSERT INTO posts (topic_id, added_by, date_added, content) VALUES ('.$topicID.', '.$_SESSION['user_info']['user_id'].', '.time().', "'.htmlspecialchars($content).'")');
+            run_query('INSERT INTO topics (categories_id, added_by, date_added, title) VALUES ('.$id.', "'.$_SESSION['userInfo']['login'].'", '.time().', "'.htmlspecialchars($title).'")');
+            $topicID = mysql_insert_id();
+            run_query('INSERT INTO posts (topic_id, added_by, date_added, content) VALUES ('.$topicID.', "'.$_SESSION['userInfo']['login'].'", '.time().', "'.htmlspecialchars($content).'")');
             header('Location: topics.php');
             exit;
         }
@@ -61,6 +58,6 @@ if ($_SESSION['isLogged'] === true && mysql_num_rows($result) == 1) {
 <?php
 } else {
     header('Нова тема');
-    echo "Възникна грешка при извикването на темата! Моля опитайте отново.";
+    //echo "Възникна грешка при извикването на темата! Моля опитайте отново.";
     exit;
 }

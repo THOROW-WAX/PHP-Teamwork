@@ -7,7 +7,6 @@ $id = intval($_GET['id']);
 //Check if the id is correct
 if ($id > 0) {
     $result = run_query('SELECT name, status FROM categories WHERE categories_id =' . $id . ' AND status = 1');
-    echo $result;
 
     if (mysql_num_rows($result) == 1) {
 
