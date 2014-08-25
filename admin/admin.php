@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include 'admin_header_footer.php';
 
 ////////// TO BE REMOVED WHEN CONNECTED TO LOGIN FORM //////////////

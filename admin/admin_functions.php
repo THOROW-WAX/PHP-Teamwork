@@ -1,8 +1,8 @@
 <?php 
-
+include '../functions.php';
 ////////////////////CHEKS IF ADMIN IS LOGED IN /////////
 function isLoggedAdmin($isLogged, $isAdmin){
-    if($_SESSION['is_logged'] === TRUE && $_SESSION['user_info']['type'] == 3){
+    if($_SESSION['isLogged'] === TRUE && $_SESSION['userInfo']['status']==2){
         return "logged admin";
     }
     else{
@@ -11,24 +11,10 @@ function isLoggedAdmin($isLogged, $isAdmin){
     }
 }
 
-
-///////////////////DB CONNETCTION  (shuld not be here !)/////////
-function db_init()
-{
-    mysql_connect('localhost','admin', '123') or die("Грешка с базата данни!");
-    mysql_select_db('forum');
-}
-//////////////////UTF ENCODING FIX (shuld not be here !)/////////
-function run_q($query){
-    mysql_query("SET NAMES utf8");
-    return mysql_query($query);
-}
 function check_status($status){
     switch ($status) {
-        case 0: return "Not Displyed"; 
-        case 1: return "status";
-        case 2: return "Inactive";
-        case 3: return "Locked"; 
+        case 0: return "Locked"; 
+        case 1: return "Active"; 
         default: return "Status Error (check db)";
     }
 }
@@ -38,7 +24,7 @@ function add_eddit_removePostsCats(){
         $description = addslashes(trim($_POST['description']));
         $status = $_POST['status']; 
         $ed_id = isset($_POST['edit_id'])==1 ? (int)$_POST['edit_id'] : 0 ;
-        $rs = run_q('SELECT * FROM group_cats WHERE name="'.$cat_name.'"AND group_cats_id!="'.$ed_id.'"');
+        $rs = run_query('SELECT * FROM group_cats WHERE name="'.$cat_name.'"AND group_cats_id!="'.$ed_id.'"');
         echo mysql_error();
         if(!mysql_numrows($rs) > 0 ){
                 
@@ -53,7 +39,7 @@ function add_eddit_removePostsCats(){
                         mysql_real_escape_string($status),
                         mysql_real_escape_string($id)
                         );
-                    run_q($query);
+                    run_query($query);
                     echo mysql_error();
                     echo "<br>Updated !!!";    
                 }else{
@@ -69,7 +55,7 @@ function add_eddit_removePostsCats(){
                     mysql_real_escape_string($status)
                     );
                     echo $query;
-                run_q($query);
+                run_query($query);
                 echo mysql_error();
                 echo "<br>Submited !!!";
             }
