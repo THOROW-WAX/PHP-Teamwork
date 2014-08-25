@@ -37,3 +37,22 @@ function db_init() {
 </html>
 <?php
     }
+
+function tagMatching($tags){
+        $check = addslashes($tags);
+        db_init();
+        $sql = "SELECT `title` FROM `tags` WHERE `title` LIKE '".$check."'";
+        if((mysql_fetch_assoc(mysql_query($sql)))){
+            $sql= mysql_query("SELECT count FROM tags WHERE title='".$check."'");
+            $counter = implode(' ', mysql_fetch_array($sql, MYSQL_ASSOC));
+            $counter = intval($counter);
+            $counter++;
+
+            $update = "UPDATE tags SET count='".$counter."' WHERE title='".$check."'";
+            mysql_query($update);
+        } else {
+            $insert = "INSERT INTO tags (tag_id, title, count) VALUES (NULL, '".$check."' ,'0')";
+            mysql_query($insert);
+        }
+
+    }
