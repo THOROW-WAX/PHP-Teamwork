@@ -29,6 +29,7 @@ function myHeader($title)
                 }
                 ?>
                 <li><a href="about.php">About</a></li>
+				<li><a href="users.php?page=1">Users</a></li>
             </ul>
         </nav>
     </header>
