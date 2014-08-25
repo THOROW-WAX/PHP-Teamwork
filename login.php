@@ -11,7 +11,7 @@ if (isset($_POST['login']) &&
         $sql = mysql_query('SELECT * FROM users WHERE login="'.addslashes($login).'" AND pass="'.md5($pass).'"');
         if (mysql_num_rows($sql) == 1) {
             $row = mysql_fetch_assoc($sql);
-            if ($row[$active]==1) {
+            if ($row['active']==1) {
                 $_SESSION['isLogged']=true;
                 $_SESSION['userInfo'] = $row;
                 header("Location: index.php");

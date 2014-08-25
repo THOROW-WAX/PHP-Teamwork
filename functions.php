@@ -19,7 +19,7 @@ function myHeader($title)
                     echo '<a href="logout.php">Logout</a>';
                     if ($_SESSION['userInfo']['status']==2) {
 //admin options
-                        echo '<a href="admin/index.php">AdminPanel</a>';
+                        echo '<a href="admin/admin.php">AdminPanel</a>';
                     }
                 } else {
                     ?>
@@ -29,6 +29,7 @@ function myHeader($title)
                 }
                 ?>
                 <li><a href="about.php">About</a></li>
+				<li><a href="users.php?page=1">Users</a></li>
             </ul>
         </nav>
     </header>
@@ -37,7 +38,7 @@ function myHeader($title)
 
 function db_init()
 {
-    mysql_connect('localhost', 'root') or die ("Error with DB");
+    mysql_connect('localhost', 'admin','123') or die ("Error with DB");
     mysql_select_db('forum');
 }
 

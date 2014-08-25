@@ -1,9 +1,11 @@
 <?php
+session_start();
+
 include 'admin_header_footer.php';
 
 ////////// TO BE REMOVED WHEN CONNECTED TO LOGIN FORM //////////////
-$_SESSION['is_logged'] = TRUE ;
-$_SESSION['user_info']['type']=3;
+//$_SESSION['is_logged'] = TRUE ;
+//$_SESSION['user_info']['type']=3;
 ////////// TO BE REMOVED WHEN CONNECTED TO LOGIN FORM //////////////
 
 

@@ -1,6 +1,7 @@
-<?php session_start();
+<?php 
+
 include "functions.php";
-if ((isset($_SESSION["isLogged"]) && !$_SESSION["isLogged"]===true)) {
+if (!(isset($_SESSION["isLogged"]) && !$_SESSION["isLogged"]===true)) {
     if(
         isset($_POST['login']) &&
         isset($_POST['pass']) &&

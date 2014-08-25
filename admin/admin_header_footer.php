@@ -1,13 +1,12 @@
 <?php 
 /////////////////////////// HEADER START //////////////////////////////////////////////
-session_start();
 
 include 'admin_functions.php';
 
 
 function admin_header($title){
  
-    echo isLoggedAdmin($_SESSION['is_logged'], $_SESSION['user_info']['type']);
+    echo isLoggedAdmin($_SESSION['isLogged'], $_SESSION['userInfo']['status']);
 ?>
 
 <!DOCTYPE  HTML>
@@ -17,7 +16,7 @@ function admin_header($title){
 </head>
     <body>
         <div id="main_menu">
-            <a href="admin.php">Beginning</a>| <a href="groups_cat.php">Groups</a> | <a href="users.php">Users</a> | <a href="../logout.php">Log out</a>
+            <a href="admin.php">AdminPanel</a>| <a href="groups_cat.php">Groups</a> | <a href="users.php">Users</a> | <a href="../index.php">Bigining</a> | <a href="../logout.php">Log out</a>
         </div>
 <?php
 }
@@ -28,7 +27,7 @@ function admin_header($title){
 
 <?php
 ///////////temp footer/////////////////////////////////////////////
-function footer(){
+function adminfooter(){
     echo '</body></html>';
 }
 ?>

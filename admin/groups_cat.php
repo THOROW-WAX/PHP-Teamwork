@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include 'admin_header_footer.php';
 admin_header('Editing groups/cats/posts'); 
 
@@ -19,7 +21,7 @@ if(isset($_POST['ng']) == 1){
 /////////////////////////////GET GROUPS POST CATEGORYS////////////////////////////////////////////////// 
 echo "<ul>";
 echo "<li>Categories:</li>";
-$rs_cats = run_q('SELECT * FROM categories');
+$rs_cats = run_query('SELECT * FROM categories');
 while ($cats = mysql_fetch_assoc($rs_cats)) {
     echo "<ul>";
     echo "<li>".$cats['name']."   "." --- " ;
@@ -27,7 +29,7 @@ while ($cats = mysql_fetch_assoc($rs_cats)) {
     echo '<a href="groups_cat.php?mode=edit&table=categories&id='.$cats['categories_id'].'">| Edit |</a>';
         echo "<ul>";
         echo "<li>Topics:</li>"; 
-            $rs_topic = run_q('SELECT * FROM topics');
+            $rs_topic = run_query('SELECT * FROM topics');
             while ($topics = mysql_fetch_assoc($rs_topic)) {
                 if($topics['categories_id'] == $cats['categories_id']){
                      echo "<li>".$topics['name']."   "." --- " ;
@@ -35,7 +37,7 @@ while ($cats = mysql_fetch_assoc($rs_cats)) {
                      echo '<a href="groups_cat.php?mode=edit&table=topics&id='.$topics['topic_id'].'">| Edit |</a>';
                         echo "<ul>";
                         echo"<li>Posts</li>";
-                            $rs_posts = run_q('SELECT * FROM posts');
+                            $rs_posts = run_query('SELECT * FROM posts');
                             while ($post = mysql_fetch_assoc($rs_posts)) {
                                 echo "<li>";
                                 echo "Adderd By: ".$post['added_by']."   "." --- " ;
@@ -68,7 +70,7 @@ if (isset($_GET['mode']) == "edit" && (isset($_GET['id']) > 0)) {
       
     }
     $query ='SELECT * FROM '.$table.' WHERE '.$table_id.'='.$id;
-    $rs = run_q('SELECT * FROM '.$table.' WHERE '.$table_id.'='.$id);
+    $rs = run_query('SELECT * FROM '.$table.' WHERE '.$table_id.'='.$id);
     echo $query ;
     echo mysql_error();
     $form_info = mysql_fetch_assoc($rs);
@@ -85,8 +87,6 @@ if (isset($_GET['mode']) == "edit" && (isset($_GET['id']) > 0)) {
     Status:<select name="status">
                 <option <?php  echo isset($form_info['status']) == 1? $form_info['status'] == 0 ? 'selected="selected"':'' :''  ?>value="0">Not Displyed</option>
                 <option <?php  echo isset($form_info['status']) == 1? $form_info['status'] == 1 ? 'selected="selected"':'' :''  ?>value="1">Active</option>
-                <option <?php  echo isset($form_info['status']) == 1? $form_info['status'] == 2 ? 'selected="selected"':'' :''  ?>value="2">InActive</option>
-                <option <?php  echo isset($form_info['status']) == 1? $form_info['status'] == 3 ? 'selected="selected"':'' :''  ?>value="3">Locked</option>
            </select> <br />
     <input type="submit" value="Submit" />
     <input type="hidden" name="ng" value="1" />
@@ -97,7 +97,8 @@ if (isset($_GET['mode']) == "edit" && (isset($_GET['id']) > 0)) {
     ?>
 </form>
 <?php
-footer();
+adminfooter();
+?>
 
 
 
