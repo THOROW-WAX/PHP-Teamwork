@@ -1,5 +1,4 @@
 <?php
-
 function myHeader ($title) {
     header('Content-Type: text/html; charset=utf-8');
     ?>
@@ -15,7 +14,6 @@ function myHeader ($title) {
         <ul>
             <?php
             if ($_SESSION["isLogged"]===true){
-
             } else {
                 ?>
                 <li><a href="register.php">Register</a></li>

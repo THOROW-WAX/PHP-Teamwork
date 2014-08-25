@@ -1,10 +1,6 @@
-<?php
-session_start();
+<?php session_start();
 include "functions.php";
-myHeader("Index");
-var_dump($_FILES['photo']);
 if (!($_SESSION["isLogged"]===true)) {
-
     if(
         isset($_POST['login']) &&
         isset($_POST['pass']) &&
@@ -36,26 +32,42 @@ if (!($_SESSION["isLogged"]===true)) {
         }
         if($_FILES['photo']['type'] == 'image/png' && $_FILES['photo']['size'] > 0) {
             move_uploaded_file($_FILES['photo']['tmp_name'], 'images/01.png');
-            echo "yes";
+            //echo "yes";
         }
-
+        if (count($regErrors)<1) {
+            db_init();
+            $sql = 'SELECT count(*) as cnt FROM users WHERE login="'.$login.'" OR email="'.$email.'"';
+            $result = mysql_query($sql);
+            $row = mysql_fetch_assoc($result);
+            if ($row['cnt'] == 0 ) {
+                mysql_query('INSERT INTO users (login, pass, real_name, email, date_reg)
+                VALUES ("'.$login.'", "'.md5($pass).'", "'.$name.'", "'.$email.'", '.time().')');
+                if (mysql_error()) {
+                    echo "<h1>Error!!</h1>";
+                } else {
+                    $_SESSION['isLogged']=true;
+                    header("Location: index.php");
+                }
+            } else {
+                $regErrors['email'] = true;
+                $regErrors['login'] = true;
+            }
+        }
     }
-
-
 ?>
 <form action="<?php $_PHP_SELF?>" method="post" enctype="multipart/form-data">
     <label for="login">Login</label>
     <input id="login" type="text" name="login"/>
     <?php
-    if($regErrors['login']) {
-        echo '<span style="color:red">Not valid login</span>';
+    if(isset($regErrors['login']) && $regErrors['login']) {
+        echo '<span style="color:red">Username or Email is not Valid</span>';
     }
     ?>
     <br/>
     <label for="pass">Password</label>
     <input id="pass2" type="password" name="pass"/>
     <?php
-    if(($regErrors['pass']) || $regErrors['passNotMatch']) {
+    if(isset($regErrors['pass']) && (($regErrors['pass']) || $regErrors['passNotMatch'])) {
         echo '<span style="color:red">Not valid password or password does\'t match</span>';
     }
     ?>
@@ -66,15 +78,15 @@ if (!($_SESSION["isLogged"]===true)) {
     <label for="email">Email</label>
     <input id="email" type="email" name="email"/>
     <?php
-    if($regErrors['email']) {
-        echo '<span style="color:red">Not valid email</span>';
+    if(isset($regErrors['email']) && $regErrors['email']) {
+        echo '<span style="color:red">Username or Email is not Valid</span>';
     }
     ?>
     <br/>
     <label for="name">Name</label>
     <input id="name" type="text" name="name"/>
     <?php
-    if($regErrors['name']) {
+    if(isset($regErrors['name']) && $regErrors['name']) {
         echo '<span style="color:red">Not valid name</span>';
     }
     ?>
@@ -86,6 +98,7 @@ if (!($_SESSION["isLogged"]===true)) {
     <input type="submit" value="Register"/>
 </form>
 <?php
+
 } else {
     header("Location: index.php");
     exit;
