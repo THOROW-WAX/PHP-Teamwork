@@ -17,70 +17,66 @@ if(isset($_POST['ng']) == 1){
 
 
 /////////////////////////////GET GROUPS POST CATEGORYS////////////////////////////////////////////////// 
-$rs_groups = run_q('SELECT * FROM group_cats');
-//// $rs contains db resorse query ID
-//echo $rs ; 
-
-echo "<ul>" ;          
-echo "<li>Groups:</li>";
-while ($groups = mysql_fetch_assoc($rs_groups)) {
-    ///////////The check does not work// TO DO FIX/////
-    echo "<li>";
-    echo $groups['name']."   "." --- " ;
-    echo check_status($groups['status']);
-    echo '<a href="groups_cat.php?mode=edit&id='.$groups['group_cats_id'].'">| Edit |</a>';
-        
+echo "<ul>";
+echo "<li>Categories:</li>";
+$rs_cats = run_q('SELECT * FROM categories');
+while ($cats = mysql_fetch_assoc($rs_cats)) {
+    echo "<ul>";
+    echo "<li>".$cats['name']."   "." --- " ;
+    echo check_status($cats['status']);
+    echo '<a href="groups_cat.php?mode=edit&table=categories&id='.$cats['categories_id'].'">| Edit |</a>';
         echo "<ul>";
-        echo "<li>Categories:</li>";
-        $rs_cats = run_q('SELECT * FROM categories');
-        while ($cats = mysql_fetch_assoc($rs_cats)) {
-            if($cats['group_cats_id'] == $groups['group_cats_id']){
-            echo "<ul>";
-            echo "<li>".$cats['name']."   "." --- " ;
-            echo check_status($cats['status']);
-            echo '<a href="groups_cat.php?mode=edit&id='.$cats['group_cats_id'].'">| Edit |</a>';
-                echo "<ul>";
-                echo "<li>Topics:</li>"; 
-                    $rs_topic = run_q('SELECT * FROM topics');
-                    while ($topics = mysql_fetch_assoc($rs_topic)) {
-                        if($topics['categories_id'] == $cats['categories_id']){
-                             echo "<li>".$topics['name']."   "." --- " ;
-                             echo check_status($topics['status']);
-                             echo '<a href="group_cats.php?mode=edit&id='.$topics['topic_id'].'">| Edit |</a>';
-                                echo "<ul>";
-                                echo"<li>Posts</li>";
-                                    $rs_posts = run_q('SELECT * FROM posts');
-                                    while ($post = mysql_fetch_assoc($rs_posts)) {
-                                        echo "<li>";
-                                        echo "Adderd By: ".$post['added_by']."   "." --- " ;
-                                        echo "Title: ".$post['title'];
-                                        echo '<a href="group_cats.php?mode=edit&id='.$topics['topic_id'].'">| Edit |</a>';
-                                    }
-                                echo "</ul>";
-                             echo "</li>";
-                        }
-                    }
-                echo "</ul>";
-            echo "</li>";
-            echo "</ul>";
+        echo "<li>Topics:</li>"; 
+            $rs_topic = run_q('SELECT * FROM topics');
+            while ($topics = mysql_fetch_assoc($rs_topic)) {
+                if($topics['categories_id'] == $cats['categories_id']){
+                     echo "<li>".$topics['name']."   "." --- " ;
+                     echo check_status($topics['status']);
+                     echo '<a href="groups_cat.php?mode=edit&table=topics&id='.$topics['topic_id'].'">| Edit |</a>';
+                        echo "<ul>";
+                        echo"<li>Posts</li>";
+                            $rs_posts = run_q('SELECT * FROM posts');
+                            while ($post = mysql_fetch_assoc($rs_posts)) {
+                                echo "<li>";
+                                echo "Adderd By: ".$post['added_by']."   "." --- " ;
+                                echo "Title: ".$post['title'];
+                                echo '<a href="groups_cat.php?mode=edit&table=posts&id='.$post['post_id'].'">| Edit |</a>';
+                            }
+                        echo "</ul>";
+                     echo "</li>";
+                }
             }
-                
-        }
         echo "</ul>";
-    echo"</li>";
-    
+    echo "</li>";
+    echo "</ul>";
+    }
+        
 
-}
 echo "</ul>";
+echo"</li>";
 //////////////////////////////   END   get cat /////////////////////////////////////////////
 
 ///////////////////////////// Form Fill Query///////////////////////////////////////////////
 if (isset($_GET['mode']) == "edit" && (isset($_GET['id']) > 0)) {
 	$id = (int)$_GET['id'];
-    $rs = run_q('SELECT * FROM group_cats WHERE group_cats_id='.$id);
+    $table = $_GET['table'];
+    switch ($table) {
+        case 'categories': $table_id = "categories_id"; break;
+        case 'topics': $table_id = "topic_id"; break;
+        case 'posts': $table_id = "post_id";
+        default:"Error In table id "; break;
+      
+    }
+    $query ='SELECT * FROM '.$table.' WHERE '.$table_id.'='.$id;
+    $rs = run_q('SELECT * FROM '.$table.' WHERE '.$table_id.'='.$id);
+    echo $query ;
+    echo mysql_error();
     $form_info = mysql_fetch_assoc($rs);
+    
+    
 }
 ///////////////////////////////////////////////////////////////////////////////////////
+//// TO DO fromata da pokazva i postove !
 ?>
 
 <form method="post" action="groups_cat.php">
@@ -102,4 +98,6 @@ if (isset($_GET['mode']) == "edit" && (isset($_GET['id']) > 0)) {
 </form>
 <?php
 footer();
-?>
+
+
+
