@@ -14,8 +14,9 @@ if ($_SESSION['isLogged'] === true && mysql_num_rows($result) == 1) {
         $content = mysql_real_escape_string(trim($_POST['content']));
 
         if (count($errors) == 0) {
-        	$currentId = mysql_query("SELECT MAX(topic_id) AS currentID FROM topics");
-            $currentId=intval($currentId)+1;
+        	$currentId = run_query("SELECT MAX(topic_id) FROM topics");
+            $result=intval(implode('', mysql_fetch_assoc($currentId)));
+            $currentId=$result+1;
             $_SESSION['currentId']= $currentId;
             run_query('INSERT INTO topics (categories_id, added_by, date_added, title) VALUES ('.$id.', "'.$_SESSION['userInfo']['login'].'", '.time().', "'.htmlspecialchars($title).'")');
             $topicID = mysql_insert_id();

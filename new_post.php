@@ -43,10 +43,8 @@ if ($id > 0) {
         }
 
         if ($content != '') {
+
             if (count($errors) == 0) {
-                $currentId = mysql_query("SELECT MAX(topic_id) AS currentID FROM topics");
-                $currentId=intval($currentId)+1;
-                $_SESSION['currentId']= $currentId;
 
                 if ($post > 0) {
                     run_query('UPDATE posts SET content="'.htmlspecialchars($content).'", edited_by="'.$_SESSION['userInfo']['login'].'", edited_when='.time().' WHERE post_id='.$post.'');
@@ -57,12 +55,14 @@ if ($id > 0) {
                     header('Location: posts.php?id='.$id.'');
                     exit;
                 }
+
             }
 
             if ( strlen($content) < 4) {
                 $errors['content'] = 'Съдържанието на вашия пост е твърде кратко! Опитайте отново.';
             }
         }
+
         myHeader('Нов пост');
 
         if (isset($post) && $post > 0) { ?>
@@ -83,6 +83,7 @@ if ($id > 0) {
             </form>
         <?php
         }
+
     }else {
         header('Location: index.php');
         exit;

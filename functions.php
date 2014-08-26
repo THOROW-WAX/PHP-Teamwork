@@ -18,6 +18,7 @@ function myHeader($title)
                 if (isset($_SESSION["isLogged"]) && $_SESSION["isLogged"]===true){
                     echo 'Hello Dear '.$_SESSION['userInfo']['real_name'];
                     echo '<a href="logout.php">Logout</a>';
+					echo '| <a href="myProfile.php">My Profile</a> |';
                     if ($_SESSION['userInfo']['status']==2) {
 //admin options
                         echo '| <a href="admin/admin.php">AdminPanel</a> |';
@@ -73,7 +74,7 @@ function tagMatching($tags)
         $tagId = implode(' ', mysql_fetch_array($tagidQuery, MYSQL_ASSOC));
         $tagId = intval($tagId);
         $postId = $_SESSION['currentId'];
-        var_dump($postId);
+        //var_dump($postId);
         $update = run_query("INSERT INTO title_tags (topic_id, tag_id) VALUES ('$postId', '".$tagId."') ");
 
 
@@ -83,7 +84,7 @@ function tagMatching($tags)
         $tagId = implode(' ', mysql_fetch_array($tagidQuery, MYSQL_ASSOC));
         $tagId = intval($tagId);
         $postId = $_SESSION['currentId'];
-        var_dump($postId);
+        //var_dump($postId);
         $update = run_query("INSERT INTO title_tags (topic_id, tag_id) VALUES ('$postId', '".$tagId."') ");
     }
 

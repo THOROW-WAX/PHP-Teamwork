@@ -9,7 +9,7 @@ function admin_header($title){
     echo isLoggedAdmin($_SESSION['isLogged'], $_SESSION['userInfo']['status']);
 ?>
 
-<!DOCTYPE  HTML>
+<!DOCTYPE  html>
 <html>
 <head>
     <title><?php echo $title?></title>
@@ -21,12 +21,8 @@ function admin_header($title){
 <?php
 }
 ///////////////////////// HEADER END///////////////////////////////////////////////////
-?>    
-
-
-
-<?php
-///////////temp footer/////////////////////////////////////////////
+?><?php
+///////////temp footer////////////////////////////////////////////
 function adminfooter(){
     echo '</body></html>';
 }

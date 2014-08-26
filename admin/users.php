@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 include 'admin_header_footer.php';
 admin_header('Editing users'); 
