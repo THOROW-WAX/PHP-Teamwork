@@ -144,4 +144,3 @@ function users_remove(){
     //DELETE FROM `forum`.`users` WHERE `users`.`user_id` = 7
 }
 ?>
-
