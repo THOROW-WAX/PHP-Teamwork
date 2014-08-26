@@ -2,10 +2,11 @@
 session_start();
 include_once 'functions.php';
 db_init();
-$id = intval($_GET['id']);
-
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+}
 //Check if the id is correct
-if ($id > 0) {
+if (isset($id) && $id > 0) {
     $result = run_query('SELECT name, status FROM categories WHERE categories_id =' . $id . ' AND status = 1');
 
     if (mysql_num_rows($result) == 1) {
@@ -28,17 +29,32 @@ if ($id > 0) {
         <br/>
         <?php
 
-        if (!empty($topics)) {
-            foreach ($topics as $value) { ?>
+        /*if (!empty($topics)) {
+            foreach ($topics as $value) { */?><!--
                 <div class="topics">
-                    <a href="posts.php?id=<?php echo $value['topic_id']; ?>">
-                        <?php echo $value['title']; ?>
+                    <a href="posts.php?id=<?php /*echo $value['topic_id']; */?>">
+                        <?php /*echo $value['title']; */?>
                     </a>
                 </div>
-            <?php
-            }
+            --><?php
+/*            }
+        }*/
+        $page = $_GET['page'];
+        $limitStart = ($page - 1) * 10;
+        $limitEnd = $page * 10;
+        $dbResult = run_query("SELECT * FROM `topics` ORDER BY date_added DESC LIMIT {$limitStart}, $limitEnd");
+        //var_dump($dbResult);
+        echo  mysql_num_rows($dbResult);
+        while ($row = mysql_fetch_assoc($dbResult)) {
+            var_dump($row);
+            ?>
+            <div class="topics">
+                <a href="posts.php?page=<?=$page?>&id=<?php echo '$row["topic_id"]'; ?>">
+                    <?php echo $row['title']; ?>
+                </a>
+            </div>
+        <?php
         }
-
         footer();
     }else {
         //echo "Възникна грешка при извикването на темата! Моля опитайте отново.";
