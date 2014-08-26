@@ -68,13 +68,23 @@ function tagMatching($tags)
         $counter = implode(' ', mysql_fetch_array($sql, MYSQL_ASSOC));
         $counter = intval($counter);
         $counter++;
+        $update = run_query("UPDATE tags SET count='" . $counter . "' WHERE title='" . $check . "'");
+        $tagidQuery = mysql_query("SELECT tag_id FROM tags WHERE title='" . $check . "'");
+        $tagId = implode(' ', mysql_fetch_array($tagidQuery, MYSQL_ASSOC));
+        $tagId = intval($tagId);
+        $postId = $_SESSION['currentId'];
+        var_dump($postId);
+        $update = run_query("INSERT INTO title_tags (post_id, tag_id) VALUES ('$postId', '".$tagId."') ");
 
-        $update = "UPDATE tags SET count='" . $counter . "' WHERE title='" . $check . "'";
-        mysql_query($update);
+
     } else {
-        $insert = "INSERT INTO tags (tag_id, title, count) VALUES (NULL, '" . $check . "' ,'0')";
-        mysql_query($insert);
+        $insert = run_query("INSERT INTO tags (tag_id, title, count) VALUES (NULL, '" . $check . "' ,'0')");
+        $tagidQuery = mysql_query("SELECT tag_id FROM tags WHERE title='" . $check . "'");
+        $tagId = implode(' ', mysql_fetch_array($tagidQuery, MYSQL_ASSOC));
+        $tagId = intval($tagId);
+        $postId = $_SESSION['currentId'];
+        var_dump($postId);
+        $update = run_query("INSERT INTO title_tags (post_id, tag_id) VALUES ('$postId', '".$tagId."') ");
     }
 
 }
-
