@@ -22,6 +22,6 @@ if (isset($_SESSION['isLogged']) && $_SESSION['isLogged'] == true) {
         }
     }
 
-    echo "<a href='admin/users.php'>Edit your profile </a>";
+    echo "<a href='admin/users.php?mode=edit&id=".$_SESSION['userInfo']['user_id']."'>Edit your profile </a>";
 
 }
