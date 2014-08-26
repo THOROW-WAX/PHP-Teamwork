@@ -86,23 +86,23 @@ function users_add(){
     $user_add = user_check_form_info();
     $query = sprintf(
             "INSERT INTO users (`user_id`, `login`, `pass`, `real_name`, `email`, `date_reg`, `status`, `active`)
-             VALUES (NULL, '%s', MD5('%s'), '%s', '%s', '0', '%s', '%s')",
+             VALUES (NULL, '%s', MD5('%s'), '%s', '%s', '%s', '%s', '%s')",
              mysql_real_escape_string($user_add['login']),
              mysql_real_escape_string($user_add['pass']),
              mysql_real_escape_string($user_add['name']),
              mysql_real_escape_string($user_add['email']),
+             time(),
              mysql_real_escape_string($user_add['status']),
              mysql_real_escape_string($user_add['active'])
             );
     run_query($query);
-    echo mysql_error();
 }
 function users_edit(){
     echo "Successfully Edited <br>";
     $user_edit = user_check_form_info();
     $user_id = $_POST['user_id']; 
     $query = sprintf(
-             "UPDATE `users` SET `login`='%s',`pass`='%s',`real_name`='%s',`email`='%s',`date_reg`='0',`status`='%s',`active`='%s' WHERE `user_id`='%s'",
+             "UPDATE `users` SET `login`='%s',`pass`='%s',`real_name`='%s',`email`='%s',`status`='%s',`active`='%s' WHERE `user_id`='%s'",
              mysql_real_escape_string($user_edit['login']),
              mysql_real_escape_string($user_edit['pass']),
              mysql_real_escape_string($user_edit['name']),
@@ -111,9 +111,7 @@ function users_edit(){
              mysql_real_escape_string($user_edit['active']),
              mysql_real_escape_string((int)$user_id)
              );
-             var_dump($query);
     run_query($query);
-    echo mysql_error();
     
 }
 function users_remove(){
@@ -122,7 +120,7 @@ function users_remove(){
     $user = $user_delete['login'];
     $query = sprintf('DELETE FROM users WHERE login = "%s"',$user);
     run_query($query);
-    echo mysql_error();
+    
     //DELETE FROM `forum`.`users` WHERE `users`.`user_id` = 7
 }
 ?>

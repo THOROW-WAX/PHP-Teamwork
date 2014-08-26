@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "functions.php";
+date_default_timezone_set("Europe/Sofia");
 myHeader("Users");
 $page = $_GET['page'];
 $limitStart = ($page - 1) * 30;
