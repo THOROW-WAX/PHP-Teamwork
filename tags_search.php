@@ -40,6 +40,41 @@ if(isset($_POST['search']) && $_POST['search']!= null){
 
    header('Location: index.php');
 }
-
+?>
+<?php
 
 ?>
+<aside id="mostPopular">
+<h3>Most Popular Tags</h3>
+    <?php
+    $countID = run_query("SELECT tag_id FROM tags ORDER BY count DESC");
+    $countarr= array();
+    $i = 0;
+    while($rows = mysql_fetch_assoc($countID)){
+        if($i == 8){
+            break;
+        }
+        $countarr[] = $rows;
+        $i++;
+    }
+    $countResult= array();
+    for ($i = 0; $i < count($countarr); $i++) {
+        $countResult[$i] = intval($countarr[$i]['tag_id']);
+    }
+    //var_dump($countResult);
+    $tagTitle= array();
+    for ($j = 0; $j < count($countResult); $j++) {
+        $tagTemp = mysql_fetch_assoc(run_query("SELECT title FROM tags WHERE tag_id LIKE '$countResult[$j]'"));
+        $tagTitle[] = $tagTemp['title'];
+    }
+    //var_dump($tagTitle);
+
+    ?>
+    <ul>
+        <?php
+        for ($i = 0; $i < count($tagTitle); $i++) {
+            echo "<li>$tagTitle[$i]</li>";
+        }
+        ?>
+    </ul>
+</aside>
