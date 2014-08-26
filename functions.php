@@ -6,6 +6,7 @@ function myHeader($title)
     <!DOCTYPE html>
     <html>
     <head>
+        <meta charset="UTF-8">
         <title><?=$title?></title>
         <link rel="stylesheet" type="text/css" href="styles/style.css">
     </head>
@@ -38,7 +39,7 @@ function myHeader($title)
 
 function db_init()
 {
-    mysql_connect('localhost', 'admin','123') or die ("Error with DB");
+    mysql_connect('localhost', 'root') or die ("Error with DB");
     mysql_select_db('forum');
 }
 

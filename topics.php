@@ -19,14 +19,34 @@ if ($id > 0) {
             </div>
        <?php endif;
 
+        $result = run_query('SELECT * FROM topics WHERE categories_id=' . $id . ' AND status=1');
+
+        while ($rows = mysql_fetch_assoc($result)) {
+            $topics[] = $rows;
+        }
+        ?>
+        <br/>
+        <?php
+
+        if (!empty($topics)) {
+            foreach ($topics as $value) { ?>
+                <div class="topics">
+                    <a href="posts.php?id=<?php echo $value['topic_id']; ?>">
+                        <?php echo $value['title']; ?>
+                    </a>
+                </div>
+            <?php
+            }
+        }
+
         footer();
-    } else {
+    }else {
         //echo "Възникна грешка при извикването на темата! Моля опитайте отново.";
         header('Location: index.php');
         exit;
     }
 
-} else {
+}else {
     header('Location: index.php');
     exit;
 }

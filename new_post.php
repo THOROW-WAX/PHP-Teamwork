@@ -14,9 +14,9 @@ if ($_SESSION['isLogged'] === true && mysql_num_rows($result) == 1) {
         $content = mysql_real_escape_string(trim($_POST['content']));
 
         if (count($errors) == 0) {
-            run_query('INSERT INTO topics (categories_id, added_by, date_added, title) VALUES ('.$id.', "'.$_SESSION['userInfo']['login'].'", '.time().', "'.htmlspecialchars($title).'")');
+            run_query('INSERT INTO topics (categories_id, added_by, title) VALUES ('.$id.', "'.$_SESSION['userInfo']['login'].'", "'.htmlspecialchars($title).'")');
             $topicID = mysql_insert_id();
-            run_query('INSERT INTO posts (topic_id, added_by, date_added, content) VALUES ('.$topicID.', "'.$_SESSION['userInfo']['login'].'", '.time().', "'.htmlspecialchars($content).'")');
+            run_query('INSERT INTO posts (topic_id, added_by, content) VALUES ('.$topicID.', "'.$_SESSION['userInfo']['login'].'", "'.htmlspecialchars($content).'")');
             header('Location: topics.php');
             exit;
         }

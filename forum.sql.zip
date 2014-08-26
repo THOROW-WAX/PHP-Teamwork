@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2014 at 12:38 AM
+-- Generation Time: Aug 26, 2014 at 12:11 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -89,11 +89,11 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `post_id` int(11) NOT NULL AUTO_INCREMENT,
   `topic_id` int(11) NOT NULL,
   `added_by` varchar(30) NOT NULL,
-  `date_added` date NOT NULL,
+  `date_added` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `content` text NOT NULL,
   `view_count` int(11) NOT NULL DEFAULT '0',
   `edited_by` varchar(50) DEFAULT NULL,
-  `edited_when` date DEFAULT NULL,
+  `edited_when` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`post_id`),
   UNIQUE KEY `post_id` (`post_id`),
   KEY `topic_id` (`topic_id`),
@@ -101,16 +101,20 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `post_id_2` (`post_id`),
   KEY `topic_id_2` (`topic_id`),
   KEY `added_by_2` (`added_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `posts`
 --
 
 INSERT INTO `posts` (`post_id`, `topic_id`, `added_by`, `date_added`, `content`, `view_count`, `edited_by`, `edited_when`) VALUES
-(2, 1, 'shefa', '2014-08-06', 'asdsfsdfsdfasdfsafdsadfsdfsdf', 0, '0', '0000-00-00'),
-(3, 1, 'shefa', '2014-08-13', 'cffdfdgfghfdgh', 0, '0', '0000-00-00'),
-(4, 16, 'vknikov', '0000-00-00', 'Пу пу, стискайте палци!', 0, NULL, NULL);
+(2, 1, 'shefa', '2014-08-05 21:00:00', 'asdsfsdfsdfasdfsafdsadfsdfsdf', 0, '0', '0000-00-00 00:00:00'),
+(3, 1, 'shefa', '2014-08-12 21:00:00', 'cffdfdgfghfdgh', 0, '0', '0000-00-00 00:00:00'),
+(4, 16, 'vknikov', '0000-00-00 00:00:00', 'Пу пу, стискайте палци!', 0, NULL, NULL),
+(5, 17, 'vknikov', '0000-00-00 00:00:00', 'Another one bites the dust', 0, NULL, NULL),
+(6, 18, 'vknikov', '0000-00-00 00:00:00', 'ПОМОООООЩ!', 0, NULL, NULL),
+(7, 19, 'vknikov', '0000-00-00 00:00:00', 'Абе лети ми се тия дни', 0, NULL, NULL),
+(8, 20, 'vknikov', '2014-08-26 10:03:31', 'Аз карам колееелоооо', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -146,23 +150,25 @@ CREATE TABLE IF NOT EXISTS `topics` (
   `topic_id` int(11) NOT NULL AUTO_INCREMENT,
   `categories_id` int(11) NOT NULL,
   `added_by` varchar(30) NOT NULL,
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `date_added` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `title` varchar(100) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`topic_id`),
   KEY `categories_id` (`categories_id`),
   KEY `added_by` (`added_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `topics`
 --
 
 INSERT INTO `topics` (`topic_id`, `categories_id`, `added_by`, `date_added`, `title`, `status`) VALUES
-(1, 1, 'shefa', '2014-08-25 15:30:43', 'Testing Relations', 2),
-(10, 1, 'vknikov', '0000-00-00 00:00:00', 'Тест Тема', 1),
-(14, 1, 'vknikov', '0000-00-00 00:00:00', 'Тест 2', 1),
-(16, 1, 'vknikov', '0000-00-00 00:00:00', 'Опала', 1);
+(1, 1, 'shefa', '2014-08-26 09:55:34', 'Testing Relations', 2),
+(16, 1, 'vknikov', '2014-08-26 09:55:34', 'Опала', 1),
+(17, 1, 'vknikov', '2014-08-26 09:55:34', 'Test', 1),
+(18, 3, 'vknikov', '0000-00-00 00:00:00', 'Как да си подкараме дебъгера', 1),
+(19, 4, 'vknikov', '0000-00-00 00:00:00', 'Хвърчило?', 1),
+(20, 5, 'vknikov', '2014-08-26 10:03:31', 'Летя с колата', 1);
 
 -- --------------------------------------------------------
 
