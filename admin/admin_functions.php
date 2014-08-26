@@ -11,62 +11,47 @@ function isLoggedAdmin($isLogged, $isAdmin){
     }
 }
 
-function check_status($status){
-    switch ($status) {
-        case 0: return "Locked"; 
-        case 1: return "Active"; 
-        default: return "Status Error (check db)";
-    }
+function form_categories($ls_cats){
+?>
+<form method="post" action="groups_cat.php">
+    Name:<input type="text" name="cat_name" value="<?php echo isset($ls_cats['name'])?$ls_cats['name']:''; ?>" /><br />
+    Description :<input type="text" name="description" value="<?php echo isset($ls_cats['description'])?$ls_cats['description']:'';?>" /><br />
+    Status: <select name="status" >
+                <option <?php echo isset($ls_cats['status'])?$ls_cats['status']==0?'selected="selected"' :'':'' ;?> value="0" >InActive</option>
+                <option <?php echo isset($ls_cats['status'])?$ls_cats['status']==1?'selected="selected"' :'':'' ;?> value="1" >Active</option>
+            </select>
+    <input type="submit" name="submit" value="Create" />
+    <input type="submit" name="submit" value="Submit" />
+    <input type="submit" name="submit" value="Delete" />
+    <input type="hidden" name="cat_id" value="<?php echo $ls_cats['categories_id'] ?>" />
+    <p>WARNING!!! Category will be deleted only if empty</p>   
+</form>
+<?php    
 }
-function add_eddit_removePostsCats(){
-    $cat_name = addslashes(trim($_POST['group_name']));
-    if(strlen($cat_name) >= 3){
-        $description = addslashes(trim($_POST['description']));
-        $status = $_POST['status']; 
-        $ed_id = isset($_POST['edit_id'])==1 ? (int)$_POST['edit_id'] : 0 ;
-        $rs = run_query('SELECT * FROM group_cats WHERE name="'.$cat_name.'"AND group_cats_id!="'.$ed_id.'"');
-        echo mysql_error();
-        //proverka za edit dali ima redove koito da se editvat 
-        if(!mysql_numrows($rs) > 0 ){
-                
-            if(isset($_POST['edit_id']) > 0){
-                $id=(int)$_POST['edit_id'];
-                if($id > 0){
-                    $query = sprintf(
-                        "UPDATE group_cats SET name='%s',added_by='%s',description='%s',status='%s' WHERE group_cats_id=%s",
-                        mysql_real_escape_string($cat_name),
-                        mysql_real_escape_string('shefa'),//////////////////TO DO
-                        mysql_real_escape_string($description),
-                        mysql_real_escape_string($status),
-                        mysql_real_escape_string($id)
-                        );
-                    run_query($query);
-                    echo mysql_error();
-                    echo "<br>Updated !!!";    
-                }else{
-                    echo "ID ERROR";    
-                }
-            }
-            else {
-                $query = sprintf(
-                    "INSERT INTO group_cats (group_cats_id,added_by,name,description,status) VALUES('NULL','%s','%s','%s','%s')",
-                    mysql_real_escape_string('shefa'),//////////////////TO DO
-                    mysql_real_escape_string($cat_name),
-                    mysql_real_escape_string($description),
-                    mysql_real_escape_string($status)
-                    );
-                    echo $query;
-                run_query($query);
-                echo mysql_error();
-                echo "<br>Submited !!!";
-            }
-        }else{
-            echo "Error"; 
-        }
-    }else{
-        echo "Name too short";
-    }
+function form_topics(){         // TO ADD CHANGEING CATEGORY
+?>
+<form method="post" action="groups_cat.php">
+    Title:<input type="text" name="cat_name" value="" /><br />
+    Status: <select>
+                <option>InActive</option>
+                <option>Active</option>
+            </select>
+</form>
+<?php    
 }
+function form_posts(){
+?>
+<form method="post" action="groups_cat.php">
+    Category name:<input type="text" name="cat_name" value="" /><br />
+    Category name:<input type="text" name="cat_desc" value="" /><br />
+    Status: <select>
+                <option>InActive</option>
+                <option>Active</option>
+            </select>
+</form>
+<?php    
+}
+
 function user_check_form_info(){
     $errors = 0;    
     if(isset($_POST['login']) && $_POST['login']!= '') {$user['login'] = $_POST['login'];}else{$errors++; echo "Error user login not set<br>";}
@@ -137,10 +122,45 @@ function users_remove(){
     $user = $user_delete['login'];
     $query = sprintf('DELETE FROM users WHERE login = "%s"',$user);
     run_query($query);
+}
+function check_cat_form_info(){
+    $cat_for['errors'] = 0 ;
+    if(isset($_POST['cat_name']) && $_POST['cat_name']!= '') {$cat_for['cat_name'] = $_POST['cat_name'];}else{$cat_for['errors']++; echo "Error Name not set<br>";} 
+    if(isset($_POST['description']) && $_POST['description']!= '') {$cat_for['description'] = $_POST['description'];}else{$cat_for['errors']++; echo "Error description not set<br>";} 
+    $cat_for['status'] = $_POST['status'];
+    return $cat_for;
+}
 
-
+function category_create(){
+    $cat_info = check_cat_form_info();
+    //var_dump($cat_info);
+    //var_dump($_SESSION);
+    if($cat_info['errors'] == 0 ){
+        $query = sprintf("INSERT INTO `categories` (`categories_id`, `added_by`, `name`, `description`, `status`) 
+                          VALUES (NULL, '%s', '%s', '%s', '%s')",
+                        mysql_real_escape_string($_SESSION['userInfo']['login']),
+                        mysql_real_escape_string($cat_info['cat_name']),
+                        mysql_real_escape_string($cat_info['description']),
+                        mysql_real_escape_string($cat_info['status'])
+                        );
+        run_query($query);
+    }else{
+        echo "info error";
+    }
+}
+function category_edit(){
+    
+}
+function category_remove(){
+    if(isset($_POST['cat_id'])){
+        $query = sprintf('DELETE FROM categories WHERE categories_id = "%s"',(int)$_POST['cat_id']);
+        run_query($query);
+    }else{
+        echo "cat id error";
+    }
+}
 
     
     //DELETE FROM `forum`.`users` WHERE `users`.`user_id` = 7
-}
+
 ?>
