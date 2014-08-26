@@ -14,9 +14,16 @@ if ($_SESSION['isLogged'] === true && mysql_num_rows($result) == 1) {
         $content = mysql_real_escape_string(trim($_POST['content']));
 
         if (count($errors) == 0) {
+        	$currentId = mysql_query("SELECT MAX(topic_id) AS currentID FROM topics");
+            $currentId=intval($currentId)+1;
+            $_SESSION['currentId']= $currentId;
             run_query('INSERT INTO topics (categories_id, added_by, title) VALUES ('.$id.', "'.$_SESSION['userInfo']['login'].'", "'.htmlspecialchars($title).'")');
             $topicID = mysql_insert_id();
             run_query('INSERT INTO posts (topic_id, added_by, content) VALUES ('.$topicID.', "'.$_SESSION['userInfo']['login'].'", "'.htmlspecialchars($content).'")');
+            $tags = preg_split("/[, .]+/", addslashes($_POST['tags']));            
+            foreach ($tags as $tag) {
+                tagMatching($tag);
+            }
             header('Location: topics.php');
             exit;
         }

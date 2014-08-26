@@ -74,7 +74,7 @@ function tagMatching($tags)
         $tagId = intval($tagId);
         $postId = $_SESSION['currentId'];
         var_dump($postId);
-        $update = run_query("INSERT INTO title_tags (post_id, tag_id) VALUES ('$postId', '".$tagId."') ");
+        $update = run_query("INSERT INTO title_tags (topic_id, tag_id) VALUES ('$postId', '".$tagId."') ");
 
 
     } else {
@@ -84,7 +84,7 @@ function tagMatching($tags)
         $tagId = intval($tagId);
         $postId = $_SESSION['currentId'];
         var_dump($postId);
-        $update = run_query("INSERT INTO title_tags (post_id, tag_id) VALUES ('$postId', '".$tagId."') ");
+        $update = run_query("INSERT INTO title_tags (topic_id, tag_id) VALUES ('$postId', '".$tagId."') ");
     }
 
 }
