@@ -29,10 +29,7 @@ if ($id > 0) {
         }
 
         if ($content != '') {
-            if (count($errors) == 0) {
-                $currentId = mysql_query("SELECT MAX(topic_id) AS currentID FROM topics");
-                $currentId=intval($currentId)+1;
-                $_SESSION['currentId']= $currentId;
+            if (count($errors) == 0) {                
                 run_query('INSERT INTO posts (topic_id, added_by, content) VALUES ('.$id.', "'.$_SESSION['userInfo']['login'].'", "'.htmlspecialchars($content).'")');
                 header('Location: posts.php?id='.$id.'');
                 exit;
@@ -46,9 +43,7 @@ if ($id > 0) {
         <form action="new_post.php?id=<?php echo $id; ?>" method="post">
             <textarea name="content" id="content" cols="30" rows="10"></textarea>
             <br/>
-            <label for="tags">Тагове</label>
-            <input type="text" id="tags" name="tags"/>
-            <br/>
+            
             <button type="submit">Изпрати</button>
             <input type="hidden" name="new_post" value="1"/>
         </form>
