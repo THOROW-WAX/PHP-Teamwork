@@ -70,7 +70,7 @@ function add_eddit_removePostsCats(){
 function user_check_form_info(){
     $errors = 0;    
     if(isset($_POST['login']) && $_POST['login']!= '') {$user['login'] = $_POST['login'];}else{$errors++; echo "Error user login not set<br>";}
-    if(isset($_POST['pass']) && $_POST['pass'] != '') {$user['pass'] = $_POST['pass'];}else{$errors++; echo "Error user password not set<br>";}
+    if(isset($_POST['pass']) ) {$user['pass'] = $_POST['pass'];}else{$errors++; echo "Error user password not set<br>";}
     if(isset($_POST['name']) && $_POST['name'] != '') {$user['name'] = $_POST['name'];}else{$errors++; echo "Error user name not set<br>";}
     if(isset($_POST['email']) && $_POST['email']!= '') {$user['email'] = $_POST['email'];}else{$errors++; echo "Error user email not set<br>";}
     $user['status'] = $_POST['status'];
@@ -101,16 +101,33 @@ function users_edit(){
     echo "Successfully Edited <br>";
     $user_edit = user_check_form_info();
     $user_id = $_POST['user_id']; 
-    $query = sprintf(
-             "UPDATE `users` SET `login`='%s',`pass`='%s',`real_name`='%s',`email`='%s',`status`='%s',`active`='%s' WHERE `user_id`='%s'",
-             mysql_real_escape_string($user_edit['login']),
-             mysql_real_escape_string($user_edit['pass']),
-             mysql_real_escape_string($user_edit['name']),
-             mysql_real_escape_string($user_edit['email']),
-             mysql_real_escape_string($user_edit['status']),
-             mysql_real_escape_string($user_edit['active']),
-             mysql_real_escape_string((int)$user_id)
+    if($user_edit['pass'] != ''){
+        if($user_edit['pass'] == $user_edit['pass2']){
+            echo "updating pass ";
+            $query = sprintf(
+                     "UPDATE `users` SET `login`='%s',`pass`='%s',`real_name`='%s',`email`='%s',`status`='%s',`active`='%s' WHERE `user_id`='%s'",
+                     mysql_real_escape_string($user_edit['login']),
+                     mysql_real_escape_string(md5($user_edit['pass'])),
+                     mysql_real_escape_string($user_edit['name']),
+                     mysql_real_escape_string($user_edit['email']),
+                     mysql_real_escape_string($user_edit['status']),
+                     mysql_real_escape_string($user_edit['active']),
+                     mysql_real_escape_string((int)$user_id)
+                 );
+        }else{
+            echo "Error in password";
+        }
+    }else{
+        $query = sprintf(
+                 "UPDATE `users` SET `login`='%s',`real_name`='%s',`email`='%s',`status`='%s',`active`='%s' WHERE `user_id`='%s'",
+                 mysql_real_escape_string($user_edit['login']),
+                 mysql_real_escape_string($user_edit['name']),
+                 mysql_real_escape_string($user_edit['email']),
+                 mysql_real_escape_string($user_edit['status']),
+                 mysql_real_escape_string($user_edit['active']),
+                 mysql_real_escape_string((int)$user_id)
              );
+    }
     run_query($query);
     
 }
@@ -120,6 +137,9 @@ function users_remove(){
     $user = $user_delete['login'];
     $query = sprintf('DELETE FROM users WHERE login = "%s"',$user);
     run_query($query);
+
+
+
     
     //DELETE FROM `forum`.`users` WHERE `users`.`user_id` = 7
 }

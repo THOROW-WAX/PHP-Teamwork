@@ -26,7 +26,8 @@ if (isset($_GET['mode']) == "edit" && (isset($_GET['id']) > 0)) {
 ?>
 <form method="post" action="users.php" >
     User login: <input type="text" name="login" value="<?php  echo isset($user_info['login']) == 1?$user_info['login']:''  ?>" /><br />
-    User Password: <input type="text" name="pass" value="<?php  echo isset($user_info['pass']) == 1?$user_info['pass']:''  ?>" /><br />
+    Set new password: <input type="text" name="pass" value="" /><br />
+    Repeat password: <input type="text" name="pass2" value="" /><br />
     Name: <input type="text" name="name" value="<?php  echo isset($user_info['real_name']) == 1?$user_info['real_name']:''  ?>" /><br />
     Email: <input type="email" name="email" value="<?php  echo isset($user_info['email']) == 1?$user_info['email']:''  ?>" /><br />
     Date registered: <?php  echo isset($user_info['date_reg']) == 1?date("d-m-Y",$user_info['date_reg']):''  ?></br>
