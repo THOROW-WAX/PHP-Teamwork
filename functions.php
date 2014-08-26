@@ -19,7 +19,7 @@ function myHeader($title)
                     echo '<a href="logout.php">Logout</a>';
                     if ($_SESSION['userInfo']['status']==2) {
 //admin options
-                        echo '<a href="admin/admin.php">AdminPanel</a>';
+                        echo '| <a href="admin/admin.php">AdminPanel</a> |';
                     }
                 } else {
                     ?>

@@ -16,7 +16,7 @@ while ($row = mysql_fetch_assoc($dbResult)){
         <li>".$row['real_name']."</li>";
     if (isset($_SESSION['isLogged']) && $_SESSION['isLogged']==true) {
         if ($_SESSION['userInfo']['status'] == 2) {
-            echo '<li><a href="admin/users.php?id='.$row['user_id'].'">AdminLink</a></li>';
+            echo '<li><a href="admin/users.php?mode=edit&id='.$row['user_id'].'">AdminLink</a></li>';
         }
     }
     echo "</ul>";
