@@ -22,5 +22,9 @@ foreach ($categories as $value) { ?>
 
 ?>
 <h1>Index</h1>
+<form action="tags_search.php" method="post">
+        <input type="search" name="search" id="search" placeholder="search"/>
+        <input type="submit" name="searchSubmit" value="Search"/>
+</form>
 <?php
 footer();
