@@ -17,9 +17,9 @@ if ($_SESSION['isLogged'] === true && mysql_num_rows($result) == 1) {
         	$currentId = mysql_query("SELECT MAX(topic_id) AS currentID FROM topics");
             $currentId=intval($currentId)+1;
             $_SESSION['currentId']= $currentId;
-            run_query('INSERT INTO topics (categories_id, added_by, title) VALUES ('.$id.', "'.$_SESSION['userInfo']['login'].'", "'.htmlspecialchars($title).'")');
+            run_query('INSERT INTO topics (categories_id, added_by, date_added, title) VALUES ('.$id.', "'.$_SESSION['userInfo']['login'].'", '.time().', "'.htmlspecialchars($title).'")');
             $topicID = mysql_insert_id();
-            run_query('INSERT INTO posts (topic_id, added_by, content) VALUES ('.$topicID.', "'.$_SESSION['userInfo']['login'].'", "'.htmlspecialchars($content).'")');
+            run_query('INSERT INTO posts (topic_id, added_by, date_added, content) VALUES ('.$topicID.', "'.$_SESSION['userInfo']['login'].'", '.time(). ', "'.htmlspecialchars($content).'")');
             $tags = preg_split("/[, .]+/", addslashes($_POST['tags']));            
             foreach ($tags as $tag) {
                 tagMatching($tag);

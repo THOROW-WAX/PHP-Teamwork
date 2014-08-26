@@ -19,7 +19,7 @@ if ($id > 0) {
             </div>
        <?php endif;
 
-        $result = run_query('SELECT * FROM topics WHERE categories_id=' . $id . ' AND status=1');
+        $result = run_query('SELECT * FROM topics WHERE categories_id=' . $id . ' AND status=1 ORDER BY date_added DESC');
 
         while ($rows = mysql_fetch_assoc($result)) {
             $topics[] = $rows;
