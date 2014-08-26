@@ -20,6 +20,13 @@ if ($id > 0) {
     <?php
     }
 
+    if (isset($_SESSION['isLogged']) && $_SESSION['isLogged'] === true) { ?>
+        <a href="new_post.php?id=<?php echo $id; ?>" >
+            Добави отговор
+        </a>
+    <?php
+    }
+
 }else {
     header('Location: index.php');
     exit;

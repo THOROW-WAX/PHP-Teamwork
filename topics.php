@@ -13,9 +13,9 @@ if ($id > 0) {
         $rows = mysql_fetch_assoc($result);
         myHeader($rows['name']);
 
-        if ($_SESSION['isLogged'] === true): ?>
+        if (isset($_SESSION['isLogged']) && $_SESSION['isLogged'] === true): ?>
             <div>
-                <a href="new_post.php?id=<?php echo $id; ?>">Създай нова тема</a>
+                <a href="new_topic.php?id=<?php echo $id; ?>">Създай нова тема</a>
             </div>
        <?php endif;
 
