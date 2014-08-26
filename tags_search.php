@@ -27,10 +27,9 @@ if(isset($_POST['search']) && $_POST['search']!= null){
     }
     for ($i = 0; $i < count($arrResult); $i++) {
       $titlePrint = mysql_fetch_assoc(run_query("SELECT title FROM topics WHERE topic_id LIKE '$arrResult[$i]'"));
-      echo '<a href="posts.php?id="'.$arrResult[$i].'">'.$titlePrint['title'].'</a><br>';
-
+      echo '<a href="posts.php?id='.$arrResult[$i].'">'.$titlePrint['title'].'</a><br>';
     }
-    var_dump($arrResult);
+    
 }else{
    header('Location: index.php');
 }
