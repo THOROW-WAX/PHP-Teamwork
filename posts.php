@@ -8,6 +8,8 @@ if ($id > 0) {
     $result = run_query('SELECT * FROM topics WHERE topic_id='. $id .'');
     $rows = mysql_fetch_assoc($result);
     $title = $rows['title'];
+    $counter = $rows['counter'] + 1;
+    run_query('UPDATE topics SET counter='.$counter.' WHERE topic_id='.$id.'');
     myHeader($title);
     $result = run_query('SELECT * FROM posts WHERE topic_id='. $id .' ORDER BY date_added ASC');
 
@@ -16,6 +18,8 @@ if ($id > 0) {
     }
     ?>
     <h1><?php echo $title; ?></h1>
+    <span>Брой прегледи: <?php echo $counter;?></span>
+    <hr/>
     <?php
     foreach ($posts as $value) { ?>
         <div class="posts">
@@ -27,6 +31,12 @@ if ($id > 0) {
         <div class="info">
             <span>Добавен на: <?php echo date('Y-m-d H:i:s', $value['date_added']);?></span>
             <span>Oт: <?php echo $value['added_by'];?></span>
+            <?php
+                if ($value['edited_by'] != null) { ?>
+                    <span>Редактиран на: <?php echo date('Y-m-d H:i:s', $value['edited_when']);?></span>
+                <?php
+                }
+            ?>
         </div>
     <?php
         if (isset($_SESSION['isLogged']) && $value['added_by'] == $_SESSION['userInfo']['login']) { ?>
