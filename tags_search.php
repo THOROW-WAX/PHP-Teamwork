@@ -3,8 +3,8 @@ session_start();
 include "functions.php";
 myHeader("Index");
 db_init();
-if(isset($_POST['search']) && $_POST['search']!= null){
-    $search = addslashes($_POST['search']);
+if(isset($_GET['search']) && $_GET['search']!= null){
+    $search = addslashes(strtolower($_GET['search']));
     $tagCheck = mysql_fetch_assoc(run_query("SELECT tag_id FROM tags WHERE title LIKE '$search'"));
     if($tagCheck==null){
         echo "There is no result. Try again!".'<br>';
@@ -51,7 +51,7 @@ if(isset($_POST['search']) && $_POST['search']!= null){
     $countarr= array();
     $i = 0;
     while($rows = mysql_fetch_assoc($countID)){
-        if($i == 8){
+        if($i == 10){
             break;
         }
         $countarr[] = $rows;
@@ -61,7 +61,7 @@ if(isset($_POST['search']) && $_POST['search']!= null){
     for ($i = 0; $i < count($countarr); $i++) {
         $countResult[$i] = intval($countarr[$i]['tag_id']);
     }
-    //var_dump($countResult);
+//    var_dump($countResult);
     $tagTitle= array();
     for ($j = 0; $j < count($countResult); $j++) {
         $tagTemp = mysql_fetch_assoc(run_query("SELECT title FROM tags WHERE tag_id LIKE '$countResult[$j]'"));
@@ -73,8 +73,11 @@ if(isset($_POST['search']) && $_POST['search']!= null){
     <ul>
         <?php
         for ($i = 0; $i < count($tagTitle); $i++) {
-            echo "<li>$tagTitle[$i]</li>";
+            echo "<li><a href='tags_search.php?search=$tagTitle[$i]&searchSubmit=Search'>$tagTitle[$i]</a></li>";
         }
         ?>
     </ul>
 </aside>
+<?php
+
+?>

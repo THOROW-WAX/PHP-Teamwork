@@ -4,6 +4,8 @@ include_once 'functions.php';
 db_init();
 $id = intval($_GET['id']);
 
+myHeader('Нов пост');
+
 if (isset($_GET['post'])) {
     $post = intval($_GET['post']);
 }
@@ -43,10 +45,12 @@ if ($id > 0) {
         }
 
         if ($content != '') {
-
             if (count($errors) == 0) {
+                $currentId = mysql_query("SELECT MAX(topic_id) AS currentID FROM topics");
+                $currentId=intval($currentId)+1;
+                $_SESSION['currentId']= $currentId;
 
-                if ($post > 0) {
+                if (isset($post) && $post > 0) {
                     run_query('UPDATE posts SET content="'.htmlspecialchars($content).'", edited_by="'.$_SESSION['userInfo']['login'].'", edited_when='.time().' WHERE post_id='.$post.'');
                     header('Location: posts.php?id='.$id.'');
                     exit;
@@ -55,7 +59,6 @@ if ($id > 0) {
                     header('Location: posts.php?id='.$id.'');
                     exit;
                 }
-
             }
 
             if ( strlen($content) < 4) {
@@ -63,7 +66,6 @@ if ($id > 0) {
             }
         }
 
-        myHeader('Нов пост');
 
         if (isset($post) && $post > 0) { ?>
             <form action="new_post.php?id=<?php echo $id; ?>&post=<?php echo $post;?>" method="post">
@@ -83,7 +85,6 @@ if ($id > 0) {
             </form>
         <?php
         }
-
     }else {
         header('Location: index.php');
         exit;

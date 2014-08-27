@@ -8,32 +8,38 @@ function myHeader($title)
     <head>
         <meta charset="UTF-8">
         <title><?=$title?></title>
-        <link rel="stylesheet" type="text/css" href="styles/style.css">
+        <link rel="stylesheet" href="styles/forum.css">
     </head>
     <body>
     <header>
-        <nav>
-            <ul>
+        <div>
+            <img src="img/header.jpg" />
+            <h1>The Forum of "Fakulteto-Uni"</h1>
+            <nav>
                 <?php
-                if (isset($_SESSION["isLogged"]) && $_SESSION["isLogged"]===true){
-                    echo 'Hello Dear '.$_SESSION['userInfo']['real_name'];
+                if (isset($_SESSION["isLogged"]) && $_SESSION["isLogged"]===true){ ?>
+
+                    <h3><?php echo  'Hello Dear '.$_SESSION['userInfo']['real_name'];?></h3>
+                        <?php
+                    echo '<br/>';
                     echo '<a href="logout.php">Logout</a>';
-					echo '| <a href="myProfile.php">My Profile</a> |';
+                    echo '<a href="myProfile.php">My Profile</a>';
                     if ($_SESSION['userInfo']['status']==2) {
 //admin options
-                        echo '| <a href="admin/admin.php">AdminPanel</a> |';
+                        echo '<a href="admin/index.php">AdminPanel</a>';
                     }
                 } else {
                     ?>
-                    <li><a href="register.php">Register</a></li>
-                    <li><a href="login.php">Login</a></li>
+                    <a href="register.php">Register</a>
+                    <a href="login.php">Login</a>
                 <?php
                 }
                 ?>
-                <li><a href="about.php">About</a></li>
-				<li><a href="users.php?page=1">Users</a></li>
-            </ul>
-        </nav>
+                <a href="about.php">About</a>
+                <a href="users.php?page=1">Users</a>
+                <a href="index.php">Index</a>
+            </nav>
+        </div>
     </header>
 <?php
 }
@@ -53,6 +59,9 @@ function run_query($query)
 function footer()
 {
     ?>
+    <footer>
+        <p>© 2014 by Team "THOROW-WAX". All Rights Reserved.</p>
+    </footer>
     </body>
     </html>
 <?php
@@ -61,7 +70,7 @@ function footer()
 
 function tagMatching($tags)
 {
-    $check = addslashes($tags);
+    $check = addslashes(strtolower($tags));
     db_init();
     $sql = "SELECT `title` FROM `tags` WHERE `title` LIKE '" . $check . "'";
     if ((mysql_fetch_assoc(mysql_query($sql)))) {

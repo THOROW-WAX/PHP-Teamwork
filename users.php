@@ -23,10 +23,10 @@ while ($row = mysql_fetch_assoc($dbResult)){
     echo "</ul>";
 }
 ?>
-<ul>
-    <li><a href="users.php?page=1">1</a></li>
-    <li><a href="users.php?page=2">2</a></li>
-    <li><a href="users.php?page=3">3</a></li>
-    <li><a href="users.php?page=4">4</a></li>
-    <li><a href="users.php?page=5">5</a></li>
+<ul class="ul">
+    <li class="ul"><a href="users.php?page=1">1</a></li>
+    <li class="ul"><a href="users.php?page=2">2</a></li>
+    <li class="ul"><a href="users.php?page=3">3</a></li>
+    <li class="ul"><a href="users.php?page=4">4</a></li>
+    <li class="ul"><a href="users.php?page=5">5</a></li>
 </ul>

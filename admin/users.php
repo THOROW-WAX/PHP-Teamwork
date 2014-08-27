@@ -1,7 +1,21 @@
 <?php
 session_start();
 include 'admin_header_footer.php';
-admin_header('Editing users'); 
+
+if($_SESSION['isLogged'] === TRUE && ($_SESSION['userInfo']['status']==2 || $_SESSION['userInfo']['user_id']==$_GET['id'])){
+        if($_SESSION['userInfo']['status']==2){
+            echo "logged admin";
+            admin_header('users');
+        }else{
+            echo $_SESSION['userInfo']['login'];
+        }
+    }
+    else{
+        header('Location: ../index.php');
+        exit;
+    }
+
+
 db_init();
 date_default_timezone_set("Europe/Sofia");
 echo "<h1>EDIT USERS & CHANGE PERMISSIONS</h1>";

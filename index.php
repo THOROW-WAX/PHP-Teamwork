@@ -12,6 +12,7 @@ while ($rows = mysql_fetch_assoc($result)) {
 foreach ($categories as $value) { ?>
     <div class="categories">
         <a href="topics.php?page=1&id=<?php echo $value['categories_id'] ?>">
+            <br/>
             <?php
             echo $value['name']. "<br/>" . $value['description'];
             ?>
@@ -22,10 +23,13 @@ foreach ($categories as $value) { ?>
 }
 
 ?>
-<h1>Index</h1>
-<form action="tags_search.php" method="post">
+    <div id="index">
+<h3>Търсене по тагове</h3>
+<form action="tags_search.php" method="get">
         <input type="search" name="search" id="search" placeholder="search"/>
+    <br/>
         <input type="submit" name="searchSubmit" value="Search"/>
 </form>
+        </div>
 <?php
 footer();

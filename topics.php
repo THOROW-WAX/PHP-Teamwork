@@ -29,16 +29,6 @@ if (isset($id) && $id > 0) {
         <br/>
         <?php
 
-        /*if (!empty($topics)) {
-            foreach ($topics as $value) { */?><!--
-                <div class="topics">
-                    <a href="posts.php?id=<?php /*echo $value['topic_id']; */?>">
-                        <?php /*echo $value['title']; */?>
-                    </a>
-                </div>
-            --><?php
-/*            }
-        }*/
         $page = $_GET['page'];
         $limitStart = ($page - 1) * 10;
         $limitEnd = $page * 10;
@@ -46,10 +36,9 @@ if (isset($id) && $id > 0) {
         //var_dump($dbResult);
         echo  mysql_num_rows($dbResult);
         while ($row = mysql_fetch_assoc($dbResult)) {
-            var_dump($row);
             ?>
             <div class="topics">
-                <a href="posts.php?page=<?=$page?>&id=<?php echo $row["topic_id"]; ?>">
+                <a href="posts.php?page=<?=$page?>&id=<?php echo $row["topic_id"]; ?>&cat=<?=$id?>">
                     <?php echo $row['title']; ?>
                 </a>
             </div>
@@ -67,10 +56,10 @@ if (isset($id) && $id > 0) {
     exit;
 }
 ?>
-<ul>
-    <li><a href="topics.php?page=1&id=<?php echo $id ?>">1</a></li>
-    <li><a href="topics.php?page=2&id=<?php echo $id ?>">2</a></li>
-    <li><a href="topics.php?page=3&id=<?php echo $id ?>">3</a></li>
-    <li><a href="topics.php?page=4&id=<?php echo $id ?>">4</a></li>
-    <li><a href="topics.php?page=5&id=<?php echo $id ?>">5</a></li>
+<ul class="ul">
+    <li class="ul"><a href="topics.php?page=1&id=<?php echo $id ?>">1</a></li>
+    <li class="ul"><a href="topics.php?page=2&id=<?php echo $id ?>">2</a></li>
+    <li class="ul"><a href="topics.php?page=3&id=<?php echo $id ?>">3</a></li>
+    <li class="ul"><a href="topics.php?page=4&id=<?php echo $id ?>">4</a></li>
+    <li class="ul"><a href="topics.php?page=5&id=<?php echo $id ?>">5</a></li>
 </ul>

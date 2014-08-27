@@ -3,6 +3,7 @@ session_start();
 include_once 'functions.php';
 db_init();
 $id = intval($_GET['id']);
+$cat = intval($_GET['cat']);
 
 if ($id > 0) {
     $result = run_query('SELECT * FROM topics WHERE topic_id='. $id .'');
@@ -48,14 +49,18 @@ if ($id > 0) {
     if (isset($_SESSION['isLogged']) && $_SESSION['isLogged'] === true) { ?>
         <hr/>
         <div>
-            <a href="new_post.php?id=<?php echo $id; ?>=" >
+            <a href="new_post.php?id=<?php echo $id; ?>" >
                 Добави отговор
             </a>
         </div>
-
     <?php
-    }
-
+    } ?>
+    <div>
+        <a href="topics.php?page=1&id=<?php echo $cat ?>" >
+            Върни се към списъка с темите
+        </a>
+    </div>
+<?php
 }else {
     header('Location: index.php');
     exit;

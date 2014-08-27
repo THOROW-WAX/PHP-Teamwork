@@ -33,12 +33,27 @@ if (isset($_POST['login']) &&
 }
 myHeader("Login");
 ?>
-<form action="" method="post">
-    <label for="login">Login</label>
-    <input id="login" type="text" name="login"/>
-    <label for="pass">Password</label>
-    <input id="pass" type="password" name="pass"/>
-    <input type="submit" value="Login"/>
-</form>
+    <div id=wrapper">
+        <section>
+            <div class="image">
+                <img src="img/house.jpg" />
+            </div>
+            <div id="form1">
+                <form action="" method="post">
+                    <header>
+                        <h2>LOGIN</h2>
+                    </header>
+                    <input type="text" id="login" name="login" value="" placeholder="username" required/><br />
+                    <input type="password" id="pass" name="pass" value="" placeholder="password" required/><br />
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+<!--<form action="" method="post">-->
+<!--    <label for="login">Login</label>-->
+<!--    <input id="login" type="text" name="login"/>-->
+<!--    <label for="pass">Password</label>-->
+<!--    <input id="pass" type="password" name="pass"/>-->
+<!--    <input type="submit" value="Login"/>-->
+<!--</form>-->
 <?php
 footer();

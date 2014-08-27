@@ -6,17 +6,18 @@ include 'admin_functions.php';
 
 function admin_header($title){
  
-    echo isLoggedAdmin($_SESSION['isLogged'], $_SESSION['userInfo']['status']);
+    
 ?>
 
 <!DOCTYPE  html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title><?php echo $title?></title>
 </head>
     <body>
         <div id="main_menu">
-            <a href="admin.php">AdminPanel</a>| <a href="groups_cat.php">Groups</a> | <a href="users.php">Users</a> | <a href="../index.php">Bigining</a> | <a href="../logout.php">Log out</a>
+            <a href="index.php">AdminPanel</a>| <a href="groups_cat.php">Groups</a> | <a href="users.php">Users</a> | <a href="../index.php">Begining</a> | <a href="../logout.php">Log out</a>
         </div>
 <?php
 }
