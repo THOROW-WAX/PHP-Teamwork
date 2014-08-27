@@ -42,14 +42,14 @@ if (isset($id) && $id > 0) {
         $page = $_GET['page'];
         $limitStart = ($page - 1) * 10;
         $limitEnd = $page * 10;
-        $dbResult = run_query("SELECT * FROM `topics` ORDER BY date_added DESC LIMIT {$limitStart}, $limitEnd");
+        $dbResult = run_query("SELECT * FROM `topics` WHERE categories_id=" . $id . " ORDER BY date_added DESC LIMIT {$limitStart}, $limitEnd");
         //var_dump($dbResult);
         echo  mysql_num_rows($dbResult);
         while ($row = mysql_fetch_assoc($dbResult)) {
             var_dump($row);
             ?>
             <div class="topics">
-                <a href="posts.php?page=<?=$page?>&id=<?php echo '$row["topic_id"]'; ?>">
+                <a href="posts.php?page=<?=$page?>&id=<?php echo $row["topic_id"]; ?>">
                     <?php echo $row['title']; ?>
                 </a>
             </div>

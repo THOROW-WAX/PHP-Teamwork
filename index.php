@@ -13,9 +13,10 @@ foreach ($categories as $value) { ?>
     <div class="categories">
         <a href="topics.php?page=1&id=<?php echo $value['categories_id'] ?>">
             <?php
-            echo $value['name']. "\n" . $value['description'];
+            echo $value['name']. "<br/>" . $value['description'];
             ?>
         </a>
+        <hr/>
     </div>
 <?php
 }
