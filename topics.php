@@ -66,3 +66,11 @@ if (isset($id) && $id > 0) {
     header('Location: index.php');
     exit;
 }
+?>
+<ul>
+    <li><a href="topics.php?page=1&id=<?php echo $id ?>">1</a></li>
+    <li><a href="topics.php?page=2&id=<?php echo $id ?>">2</a></li>
+    <li><a href="topics.php?page=3&id=<?php echo $id ?>">3</a></li>
+    <li><a href="topics.php?page=4&id=<?php echo $id ?>">4</a></li>
+    <li><a href="topics.php?page=5&id=<?php echo $id ?>">5</a></li>
+</ul>
