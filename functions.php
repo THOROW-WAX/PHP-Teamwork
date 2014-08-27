@@ -89,12 +89,22 @@ function tagMatching($tags)
 
     } else {
         $insert = run_query("INSERT INTO tags (tag_id, title, count) VALUES (NULL, '" . $check . "' ,'0')");
-        $tagidQuery = mysql_query("SELECT tag_id FROM tags WHERE title='" . $check . "'");
-        $tagId = implode(' ', mysql_fetch_array($tagidQuery, MYSQL_ASSOC));
-        $tagId = intval($tagId);
+        $tagidQuery = "SELECT MAX(tag_id) FROM tags";
+        $tagId = run_query($tagidQuery);
+
+        $arr = array();
+        while($rows = mysql_fetch_array($tagId, MYSQL_ASSOC)){
+            $arr[] = $rows;
+        }
+//        var_dump($arr);
+        for ($i = 0; $i < count($arr); $i++) {
+          $arrResult[$i]=intval($arr[$i]['MAX(tag_id)']);
+        }
+
+        var_dump($arrResult);
         $postId = $_SESSION['currentId'];
         //var_dump($postId);
-        $update = run_query("INSERT INTO title_tags (topic_id, tag_id) VALUES ('$postId', '".$tagId."') ");
+        $update = run_query("INSERT INTO title_tags (topic_id, tag_id) VALUES ('$postId', '".$arrResult[0]."') ");
     }
 
 }
